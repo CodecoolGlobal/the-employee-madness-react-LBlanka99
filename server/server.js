@@ -53,7 +53,7 @@ app.post("/api/employees/", async (req, res, next) => {
 
 app.patch("/api/employees/:id", async (req, res, next) => {
   const employee = req.body;
-
+ 
   try {
     const updated = await req.employee.set(employee).save();
     return res.json(updated);
@@ -70,6 +70,12 @@ app.delete("/api/employees/:id", async (req, res, next) => {
     return next(err);
   }
 });
+
+app.get("/robert", async (req, res) => {
+  const regex = new RegExp("^Robert");
+  const data = await EmployeeModel.find({name: regex});
+  return res.json(data);
+})
 
 const main = async () => {
   await mongoose.connect(MONGO_URL);
