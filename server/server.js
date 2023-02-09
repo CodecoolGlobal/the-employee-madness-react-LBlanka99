@@ -71,7 +71,7 @@ app.delete("/api/employees/:id", async (req, res, next) => {
   }
 });
 
-app.get("/robert", async (req, res) => {
+app.get("/api/robert", async (req, res) => {
   const regex = new RegExp("^Robert");
   const data = await EmployeeModel.find({name: regex});
   return res.json(data);
