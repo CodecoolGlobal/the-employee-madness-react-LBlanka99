@@ -11,3 +11,21 @@ select {
   margin-top: 50px;
   color: rgb(16, 54, 151);
 }
+
+#arrow {
+  margin-left: 5px;
+  background-color: rgb(219, 230, 255);
+}
+
+select {
+  background-color: rgb(219, 230, 255);
+  border-radius: 7px;
+  padding: 5px;
+  color: rgb(2, 25, 44);
+  margin-bottom: 7px;
+}
+
+select:hover {
+  cursor: pointer;
+  background-color: rgb(169, 185, 221);
+}
