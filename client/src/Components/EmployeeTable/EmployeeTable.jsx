@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./EmployeeTable.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -84,7 +84,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
 
   
   return (
-  <div className="EmployeeTable">
+  <div className="table">
     <table>
       <thead>
         <tr>

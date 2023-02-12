@@ -33,7 +33,7 @@ a {
   color: inherit;
 }
 
-.EmployeeTable {
+.table {
   padding: 0.5rem;
 }
 
@@ -101,3 +101,8 @@ form button {
 .grow {
   flex: 1;
 }
+
+.equip {
+  margin-left: 50px;
+}
+
