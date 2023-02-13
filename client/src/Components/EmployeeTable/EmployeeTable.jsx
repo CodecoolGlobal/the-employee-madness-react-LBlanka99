@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./EmployeeTable.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +12,23 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const [selectedPosition, setSelectedPosition] = useState("");
   const [sortingBy, setSortingBy] = useState("");
   const [arrow, setArrow] = useState(faArrowDown);
+  const [helper, setHelper] = useState(employees);
+  const [direction, setDirection] = useState(1);
   let empty = true;
+
+  const handlePresent = (id) => {
+    const index = employees.findIndex(employee => employee._id === id);
+    employees[index].present = !employees[index].present;
+    fetch(`/api/employees/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(employees[index]),
+    }).then((res) => res.json());
+    setHelper([...employees]);
+  }
+
 
   const levels = employees.reduce((acc, employee) => {
     if (!acc.includes(employee.level)) {
@@ -29,7 +45,6 @@ const EmployeeTable = ({ employees, onDelete }) => {
   }, []);
 
   const filterByLevels = event => {
-    console.log(event.target.value);
     setSelectedLevel(event.target.value);
   };
 
@@ -44,41 +59,25 @@ const EmployeeTable = ({ employees, onDelete }) => {
   const toggleDirection = () => {
     if (arrow === faArrowDown) {
       setArrow(faArrowUp);
+      setDirection(-1)
     } else {
       setArrow(faArrowDown);
+      setDirection(1);
     }
   }
 
 
   if (sortingBy) {
-    if (arrow === faArrowDown) {
       if (sortingBy === "lastName") {
-        employees.sort((a, b) => (a.name.split(" ").at(-1) > b.name.split(" ").at(-1)) ? 1 : -1);
+        employees.sort((a, b) => (a.name.split(" ").at(-1) > b.name.split(" ").at(-1)) ? 1*direction : -1*direction);
       } else if (sortingBy === "middleName") {
         let filtered = employees.filter(employee => employee.name.split(" ").length > 2);
-        filtered.sort((a, b) => (a.name.split(" ")[1] > b.name.split(" ")[1] ? 1 : -1));
+        filtered.sort((a, b) => (a.name.split(" ")[1] > b.name.split(" ")[1] ? 1*direction : -1*direction));
         let others = employees.filter(employee => employee.name.split(" ").length <= 2);
         employees = filtered.concat(others);
       } else {
-        console.log(sortingBy);
-        employees.sort((a, b) => (a[sortingBy] > b[sortingBy]) ? 1 : -1);
-        console.log(employees);
+        employees.sort((a, b) => (a[sortingBy] > b[sortingBy]) ? 1*direction : -1*direction);
       }
-    } else {
-      if (sortingBy === "lastName") {
-        employees.sort((a, b) => (a.name.split(" ").at(-1) < b.name.split(" ").at(-1)) ? 1 : -1);
-      } else if (sortingBy === "middleName") {
-        let filtered = employees.filter(employee => employee.name.split(" ").length > 2);
-        filtered.sort((a, b) => (a.name.split(" ")[1] < b.name.split(" ")[1] ? 1 : -1));
-        let others = employees.filter(employee => employee.name.split(" ").length <= 2);
-        employees = filtered.concat(others);
-      } else {
-        console.log(sortingBy);
-        employees.sort((a, b) => (a[sortingBy] < b[sortingBy]) ? 1 : -1);
-        console.log(employees);
-      }
-    }
-    
   }
 
 
@@ -105,6 +104,8 @@ const EmployeeTable = ({ employees, onDelete }) => {
               )}
             </select>
           </th>
+          <th>Equipment</th>
+          <th>Present</th>
           <th>Sort by
             <select name="sorting" onChange={handleSorting}>
               <option value={""}>-- Please choose --</option>
@@ -129,6 +130,13 @@ const EmployeeTable = ({ employees, onDelete }) => {
                 <td>{employee.name}</td>
                 <td>{employee.level}</td>
                 <td>{employee.position}</td>
+                <td>{employee.equipment}</td>
+                <td>
+                  <input
+                  type="checkbox"
+                  checked={employee.present}
+                  onChange={() => handlePresent(employee._id)} />
+                </td>
                 <td>
                   <Link to={`/update/${employee._id}`}>
                     <button type="button">Update</button>

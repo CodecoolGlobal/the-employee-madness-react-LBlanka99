@@ -42,7 +42,7 @@ const EmployeeUpdater = () => {
     setUpdateLoading(true);
     updateEmployee(employee)
       .then(() => {
-        navigate("/");
+        navigate("/missing");
       })
       .catch((error) => {
         throw error;

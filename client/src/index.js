@@ -16,6 +16,7 @@ import RobertList from "./Pages/RobertList";
 import EquipmentList from "./Pages/EquipmentList";
 import EquipmentCreator from "./Pages/EquipmentCreator";
 import EquipmentUpdater from "./Pages/EquipmentUpdater";
+import MissingEmployees from "./Pages/MissingEmployees";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/equipment/update/:id",
         element: <EquipmentUpdater />
+      },
+      {
+        path: "/missing",
+        element: <MissingEmployees />
       }
     ],
   },
