@@ -45,7 +45,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
 
 
   return (
-    <div>
+    
       <form className="EmployeeForm" id="EmployeeForm" onSubmit={onSubmit}>
         {data && (
           <input type="hidden" name="_id" defaultValue={data._id} />
@@ -77,7 +77,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
             id="position"
           />
         </div>
-      </form>
+      
 
       <div className="control equipment-select">
         <label htmlFor="equipment">Equipment in use:</label>
@@ -94,7 +94,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
         </select>
       </div>
 
-      <form>
+      
       <div className="buttons">
           <button type="submit" disabled={disabled}>
             {data ? "Update Employee" : "Create Employee"}
@@ -105,7 +105,7 @@ const EmployeeForm = ({ onSave, disabled, employee, onCancel }) => {
           </button>
         </div>
       </form>
-    </div>
+    
   );
 };
 

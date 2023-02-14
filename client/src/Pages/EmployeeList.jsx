@@ -26,6 +26,19 @@ const EmployeeList = () => {
     });
   };
 
+  const handlePresent = (id) => {
+    const index = data.findIndex(employee => employee._id === id);
+    data[index].present = !data[index].present;
+    fetch(`/api/employees/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data[index]),
+    }).then((res) => res.json());
+    setData([...data]);
+  }
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -48,7 +61,7 @@ const EmployeeList = () => {
     return <Loading />;
   }
 
-  return <EmployeeTable employees={data} onDelete={handleDelete} />;
+  return <EmployeeTable employees={data} onDelete={handleDelete} onToggle={handlePresent} />;
 };
 
 export default EmployeeList;

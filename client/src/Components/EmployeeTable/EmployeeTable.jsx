@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link } from "react-router-dom";
 import "./EmployeeTable.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,28 +6,13 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 
 
-const EmployeeTable = ({ employees, onDelete }) => {
-  console.log(employees);
+const EmployeeTable = ({ employees, onDelete, onToggle }) => {
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedPosition, setSelectedPosition] = useState("");
   const [sortingBy, setSortingBy] = useState("");
   const [arrow, setArrow] = useState(faArrowDown);
-  const [helper, setHelper] = useState(employees);
   const [direction, setDirection] = useState(1);
   let empty = true;
-
-  const handlePresent = (id) => {
-    const index = employees.findIndex(employee => employee._id === id);
-    employees[index].present = !employees[index].present;
-    fetch(`/api/employees/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(employees[index]),
-    }).then((res) => res.json());
-    setHelper([...employees]);
-  }
 
 
   const levels = employees.reduce((acc, employee) => {
@@ -135,7 +120,7 @@ const EmployeeTable = ({ employees, onDelete }) => {
                   <input
                   type="checkbox"
                   checked={employee.present}
-                  onChange={() => handlePresent(employee._id)} />
+                  onChange={() => onToggle(employee._id)} />
                 </td>
                 <td>
                   <Link to={`/update/${employee._id}`}>

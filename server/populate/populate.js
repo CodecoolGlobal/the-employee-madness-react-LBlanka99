@@ -35,7 +35,7 @@ const populateEmployees = async () => {
 const populateEquipment = async () => {
   await EquipmentModel.deleteMany();
 
-  await EquipmentModel.create({name: "laser sword", type: "weapon", amount: 17});
+  await EquipmentModel.create({name: "lightsaber", type: "weapon", amount: 17});
   console.log("equipment created");
 }
 
