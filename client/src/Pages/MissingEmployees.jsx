@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const fetchEmployees = () => {
-    return fetch("/api/employees").then((res) => res.json());
+    return fetch("/api/employees?limit=10000").then((res) => res.json());
   };
 
 const MissingEmployees = () => {
@@ -11,14 +11,12 @@ const MissingEmployees = () => {
     useEffect(() => {
         fetchEmployees()
         .then((employees) => {
-            setData(employees);
-            console.log(employees);
+            setData(employees.results);
         })
     }, []);
     
     if (data) {
         missings = data.filter(employee => employee.present === false);
-        console.log(missings);
     }
     
 

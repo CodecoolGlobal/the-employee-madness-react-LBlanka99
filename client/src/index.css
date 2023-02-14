@@ -24,8 +24,18 @@ button {
   background-color: white;
 }
 
+button:disabled {
+  cursor: default;
+  background-color: gray;
+  outline: none;
+}
+
 button:hover {
   border-color: rgb(99, 151, 254);
+}
+
+button:disabled:hover {
+  border-color: white;
 }
 
 a {

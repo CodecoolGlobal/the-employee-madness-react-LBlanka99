@@ -3,6 +3,47 @@ const router = express.Router();
 const EmployeeModel = require("../db/employee.model");
 
 
+router.get("/", async (req, res) => {
+  const page = req.query.page ? Number(req.query.page) : 1;
+  const limit = req.query.limit ? Number(req.query.limit) : 10;
+
+  console.log(page, limit);
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const results = {};
+
+  if (endIndex < await EmployeeModel.countDocuments()) {
+    results.next = {
+      page: page + 1,
+      limit: limit
+    }
+  } else {
+    results.next = {
+      page: null,
+      limit: limit
+    }
+  }
+
+  if (startIndex > 0) {
+    results.prev = {
+      page: page - 1,
+      limit: limit
+    }
+  } else {
+    results.prev = {
+      page: null,
+      limit: limit
+    }
+  }
+
+  const employees = await EmployeeModel.find().limit(limit).skip(startIndex).sort({ created: "desc" });
+  results.results = employees;
+  return res.json(results);
+});
+
+
 router.use("/:id", async (req, res, next) => {
     let employee = null;
   
@@ -18,11 +59,6 @@ router.use("/:id", async (req, res, next) => {
   
     req.employee = employee;
     next();
-  });
-  
-  router.get("/", async (req, res) => {
-    const employees = await EmployeeModel.find().sort({ created: "desc" });
-    return res.json(employees);
   });
   
   
