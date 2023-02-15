@@ -7,6 +7,8 @@ const names = require("./names.json");
 const levels = require("./levels.json");
 const positions = require("./positions.json");
 const EmployeeModel = require("../db/employee.model");
+const kittenNames = require("./kittens.json");
+const kittenModel = require("../db/kitten.model");
 
 const mongoUrl = process.env.MONGO_URL;
 
@@ -30,10 +32,25 @@ const populateEmployees = async () => {
   console.log("Employees created");
 };
 
+const populateKittens = async () => {
+  await kittenModel.deleteMany();
+
+  const employees = await EmployeeModel.find();
+  const kittens = employees.map((employee) => ({
+    name: pick(kittenNames),
+    weight: Math.floor(Math.random() * 7),
+    employee: employee
+  }));
+
+  await kittenModel.create(...kittens);
+  
+}
+
 const main = async () => {
   await mongoose.connect(mongoUrl);
 
   await populateEmployees();
+  await populateKittens();
 
   await mongoose.disconnect();
 };
