@@ -7,6 +7,7 @@ const names = require("./names.json");
 const levels = require("./levels.json");
 const positions = require("./positions.json");
 const EmployeeModel = require("../db/employee.model");
+const kittenNames = require("./kittens.json");
 
 const mongoUrl = process.env.MONGO_URL;
 
@@ -24,6 +25,13 @@ const populateEmployees = async () => {
     name,
     level: pick(levels),
     position: pick(positions),
+    kittens: [{
+      name: pick(kittenNames),
+      weight: Math.floor(Math.random() * (8 - 1) + 1),
+    }, {
+      name: pick(kittenNames),
+      weight: Math.floor(Math.random() * (8 - 1) + 1), 
+    }]
   }));
 
   await EmployeeModel.create(...employees);
