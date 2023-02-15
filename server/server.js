@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const EmployeeModel = require("./db/employee.model");
+const toolsModel = require("./db/tools.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
 
@@ -70,6 +71,15 @@ app.delete("/api/employees/:id", async (req, res, next) => {
     return next(err);
   }
 });
+
+app.get("/api/tools/", async (req, res) => {
+  const field = req.query.name ?? null;
+  const filter = req.query.name ? {name: { $regex: field, $options: "i"}} : {};
+  console.log(filter);
+
+  const tools = await toolsModel.find(filter).sort({created: "desc"});
+  return res.json(tools);
+})
 
 const main = async () => {
   await mongoose.connect(MONGO_URL);
