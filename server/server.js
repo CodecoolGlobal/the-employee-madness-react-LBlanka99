@@ -31,6 +31,11 @@ app.use("/api/employees/:id", async (req, res, next) => {
   next();
 });
 
+app.get("/api/top-paid-employees/", async (req, res) => {
+  const limit = req.query.limit ?? 3;
+  const employees = await EmployeeModel.find().sort({salary: "desc"}).limit(limit);
+  return res.json(employees);
+})
 app.get("/api/employees/", async (req, res) => {
   const employees = await EmployeeModel.find().sort({ created: "desc" });
   return res.json(employees);
