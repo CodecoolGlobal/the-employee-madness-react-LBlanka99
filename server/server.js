@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const boardGamesModel = require("./db/boardGames.model");
 const EmployeeModel = require("./db/employee.model");
 
 const { MONGO_URL, PORT = 8080 } = process.env;
@@ -40,6 +41,15 @@ app.get("/api/employees/:id", (req, res) => {
   return res.json(req.employee);
 });
 
+app.get("/api/boardGames/", async (req, res) => {
+  const games = await boardGamesModel.find();
+  return res.json(games);
+})
+
+app.get("/api/boardGames/:id", async (req, res) => {
+  const game = await boardGamesModel.find({_id: req.params.id});
+})
+
 app.post("/api/employees/", async (req, res, next) => {
   const employee = req.body;
 
@@ -50,6 +60,11 @@ app.post("/api/employees/", async (req, res, next) => {
     return next(err);
   }
 });
+
+app.post("/api/boardGames/", async (req, res) => {
+  const saved = await boardGamesModel.create(req.body);
+  return res.json(saved);
+})
 
 app.patch("/api/employees/:id", async (req, res, next) => {
   const employee = req.body;

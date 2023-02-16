@@ -7,6 +7,7 @@ const names = require("./names.json");
 const levels = require("./levels.json");
 const positions = require("./positions.json");
 const EmployeeModel = require("../db/employee.model");
+const boardGamesModel = require("../db/boardGames.model");
 
 const mongoUrl = process.env.MONGO_URL;
 
@@ -34,6 +35,21 @@ const main = async () => {
   await mongoose.connect(mongoUrl);
 
   await populateEmployees();
+
+  await boardGamesModel.deleteMany();
+  await boardGamesModel.insertMany([{
+    name: "Monopoly",
+    maxPlayers: 8
+  },
+  {
+    name: "Chess",
+    maxPlayers: 2
+  },
+  {
+    name: "Go",
+    maxPlayers: 2
+  },
+  ])
 
   await mongoose.disconnect();
 };

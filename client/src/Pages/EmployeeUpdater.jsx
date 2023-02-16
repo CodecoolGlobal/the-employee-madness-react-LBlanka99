@@ -38,6 +38,8 @@ const EmployeeUpdater = () => {
       });
   }, [id]);
 
+  
+
   const handleUpdateEmployee = (employee) => {
     setUpdateLoading(true);
     updateEmployee(employee)
