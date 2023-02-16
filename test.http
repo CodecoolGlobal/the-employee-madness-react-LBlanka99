@@ -1,4 +1,4 @@
-GET http://localhost:8080/api/tools/?name="Pen"
+GET http://localhost:8080/api/tools/?name=e
 
 ###
 POST http://localhost:8080/api/employees/

@@ -52,6 +52,11 @@ app.post("/api/employees/", async (req, res, next) => {
   }
 });
 
+app.post("/api/tools/", async (req, res) => {
+  const saved = await toolsModel.create(req.body);
+  return res.json(saved);
+})
+
 app.patch("/api/employees/:id", async (req, res, next) => {
   const employee = req.body;
 
@@ -75,8 +80,6 @@ app.delete("/api/employees/:id", async (req, res, next) => {
 app.get("/api/tools/", async (req, res) => {
   const field = req.query.name ?? null;
   const filter = req.query.name ? {name: { $regex: field, $options: "i"}} : {};
-  console.log(filter);
-
   const tools = await toolsModel.find(filter).sort({created: "desc"});
   return res.json(tools);
 })
