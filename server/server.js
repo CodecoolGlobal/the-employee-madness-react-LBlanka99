@@ -33,7 +33,7 @@ app.use("/api/employees/:id", async (req, res, next) => {
 });
 
 app.get("/api/employees/", async (req, res) => {
-  const employees = await EmployeeModel.find().sort({ created: "desc" });
+  const employees = await EmployeeModel.find().populate("favGame");
   return res.json(employees);
 });
 

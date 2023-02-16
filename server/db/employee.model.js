@@ -7,7 +7,10 @@ const EmployeeSchema = new Schema({
   name: String,
   level: String,
   position: String,
-  favGame: mongoose.SchemaTypes.ObjectId,
+  favGame: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "BoardGame"
+  },
   created: {
     type: Date,
     default: Date.now,
