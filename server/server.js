@@ -78,8 +78,7 @@ app.delete("/api/employees/:id", async (req, res, next) => {
 });
 
 app.get("/api/tools/", async (req, res) => {
-  const field = req.query.name ?? null;
-  const filter = req.query.name ? {name: { $regex: field, $options: "i"}} : {};
+  const filter = req.query.name ? {name: { $regex: req.query.name, $options: "i"}} : {};
   const tools = await toolsModel.find(filter).sort({created: "desc"});
   return res.json(tools);
 })
