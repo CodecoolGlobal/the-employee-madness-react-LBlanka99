@@ -32,6 +32,7 @@
 </details>
 
 ## About the project
+![About The Project Screenshot][starting-image]
 ### What is employee madness?
 
 This project was a task during my studies at Codecool. <br>
@@ -69,6 +70,8 @@ Employee Madness has several branches, and each of them has some different featu
   <li>The background color of the row of an employee is actually the employee's favourite color.</li>
 </ul>
 
+![Employee List Screenshot][favourite-color-image]
+
 #### PA practice 4 branch
 <ul>
   <li>Employee's salaray is randomly generated between 20 and 60.</li>
@@ -97,6 +100,8 @@ Employee Madness has several branches, and each of them has some different featu
   <li>You can also store board games.</li>
   <li>You can choose a favourite board game for each employee from a dropdown list.</li>
 </ul>
+
+![Update Employee Screenshot][board-game-image]
 
 ## Built with
 ### Server side
@@ -129,11 +134,11 @@ Copy the .env.sample as .env and fill up the environment variable for your perso
 #### 3. Prepare the database
 
 ```bash
-cd ./server
-npm run populate
+cd ./server/populate
+node populate.js
 ```
 
-**populate command** will run the populate.js file as a script and it will generate a buch of starter data for your database. 
+**node command** will run the populate.js file as a script and it will generate a buch of starter data for your database. 
 
 #### 4. Running the code
 
@@ -185,4 +190,7 @@ Open your web browser and visit http://localhost:3000 to access the Employee Man
 [react-url]: https://react.dev/
 [reactRouter]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [reactRouter-url]: https://reactrouter.com/en/main
+[favourite-color-image]: images/screenshot1.png
+[board-game-image]: images/screenshot2.png
+[starting-image]: images/screenshot3.png
 
