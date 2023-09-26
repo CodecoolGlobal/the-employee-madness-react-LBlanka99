@@ -117,7 +117,7 @@ Employee Madness has several branches, and each of them has some different featu
 ### Prerequisites
 <ul>
   <li>Node.js installed on your machine.</li>
-  <li>MongoDB set up and running. Update the MONGO_URL environment variable in the server code to point to your MongoDB instance.</li>
+  <li>MongoDB set up and running.</li>
 </ul>
   
 ### Server side
@@ -134,11 +134,11 @@ Copy the .env.sample as .env and fill up the environment variable for your perso
 #### 3. Prepare the database
 
 ```bash
-cd ./server/populate
-node populate.js
+cd ./server
+npm run populate
 ```
 
-**node command** will run the populate.js file as a script and it will generate a buch of starter data for your database. 
+**populate command** will run the populate.js file as a script and it will generate a buch of starter data for your database.
 
 #### 4. Running the code
 
